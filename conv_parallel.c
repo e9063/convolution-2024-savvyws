@@ -31,12 +31,13 @@ int main()
 #pragma omp parallel for
     for (int i = 0; i < result_size; i++)
     {
-        R_parallel[i] = 0; // Initialize result to 0
+        int sum = 0; // Initialize result to 0
 
         for (int j = 0; j < NF; j++)
         {
-            R_parallel[i] += A[i + j] * F[j];
+            sum += A[i + j] * F[j];
         }
+        R_parallel[i] = sum;
     }
 
     double end_time = omp_get_wtime();

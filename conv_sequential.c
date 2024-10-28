@@ -29,12 +29,13 @@ int main()
 
     for (int i = 0; i < result_size; i++)
     {
-        R_seq[i] = 0; // Initialize result to 0
+        int sum = 0; // Initialize result to 0
 
         for (int j = 0; j < NF; j++)
         {
-            R_seq[i] += A[i + j] * F[j];
+            sum += A[i + j] * F[j];
         }
+        R_seq[i] = sum;
     }
 
     // End timing for sequential convolution
