@@ -25,23 +25,26 @@ int main()
 
     // Timing with OpenMP
     double start_time = omp_get_wtime();
+    int result_size = NA - NF + 1;
 
-// Convolution (Parallelized)
+    // Convolution (Parallelized)
 #pragma omp parallel for
-    for (int i = 0; i <= NA - NF; i++)
+    for (int i = 0; i < result_size; i++)
     {
         R_parallel[i] = 0; // Initialize result to 0
+
         for (int j = 0; j < NF; j++)
         {
             R_parallel[i] += A[i + j] * F[j];
         }
     }
 
-    double end_time = omp_get_wtime(); // End time for parallel
+    double end_time = omp_get_wtime();
     double total_time = end_time - start_time;
 
+    // Print results
     printf("Parallel result:\n");
-    for (int i = 0; i <= NA - NF; i++)
+    for (int i = 0; i < result_size; i++)
     {
         printf("%d\n", R_parallel[i]);
     }

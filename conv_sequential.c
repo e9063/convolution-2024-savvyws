@@ -7,6 +7,7 @@ int main()
     // ---- input and malloc A, F ----
     int NA, NF;
     scanf("%d %d", &NA, &NF);
+
     int *A = malloc(sizeof(int) * NA);
     int *F = malloc(sizeof(int) * NF);
     int *R_seq = malloc(sizeof(int) * (NA - NF + 1));
@@ -17,16 +18,19 @@ int main()
     }
     for (int i = 0; i < NF; i++)
     {
-        scanf("%d", &F[i]);
+        scanf("%d", &F[NF - i - 1]); // Read filter in reverse
     }
 
     // Start timing for sequential convolution
     clock_t start_seq = clock();
 
     // Convolution
-    for (int i = 0; i <= NA - NF; i++)
+    int result_size = NA - NF + 1;
+
+    for (int i = 0; i < result_size; i++)
     {
         R_seq[i] = 0; // Initialize result to 0
+
         for (int j = 0; j < NF; j++)
         {
             R_seq[i] += A[i + j] * F[j];
@@ -37,17 +41,19 @@ int main()
     clock_t end_seq = clock();
     double seq_time = (double)(end_seq - start_seq) / CLOCKS_PER_SEC;
 
+    // Print results
     printf("Sequential result:\n");
-    for (int i = 0; i <= NA - NF; i++)
+    for (int i = 0; i < result_size; i++)
     {
         printf("%d\n", R_seq[i]);
     }
-    printf("\nTotal time for sequential execution: %f seconds\n", seq_time);
+    printf("Total time for sequential execution: %f seconds\n", seq_time);
 
     // ---- free memory ----
     free(F);
     free(A);
     free(R_seq);
     // ---- end free ----
+
     return 0;
 }
