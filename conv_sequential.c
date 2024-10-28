@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-// #include <time.h>
+#include <time.h>
 
 int main()
 {
@@ -20,14 +20,8 @@ int main()
         scanf("%d", &F[i]);
     }
 
-    int FF[NF];
-    for (int i = 0; i < NF; i++)
-    {
-        FF[i] = F[NF - 1 - i];
-    }
-
     // Start timing for sequential convolution
-    // clock_t start_seq = clock();
+    clock_t start_seq = clock();
 
     // Convolution
     for (int i = 0; i <= NA - NF; i++)
@@ -35,20 +29,20 @@ int main()
         R_seq[i] = 0; // Initialize result to 0
         for (int j = 0; j < NF; j++)
         {
-            R_seq[i] += A[i + j] * FF[j];
+            R_seq[i] += A[i + j] * F[j];
         }
     }
 
     // End timing for sequential convolution
-    // clock_t end_seq = clock();
-    // double seq_time = (double)(end_seq - start_seq) / CLOCKS_PER_SEC;
+    clock_t end_seq = clock();
+    double seq_time = (double)(end_seq - start_seq) / CLOCKS_PER_SEC;
 
     printf("Sequential result:\n");
     for (int i = 0; i <= NA - NF; i++)
     {
-        printf("%d \n", R_seq[i]);
+        printf("%d\n", R_seq[i]);
     }
-    // printf("\nTotal time for sequential execution: %f seconds\n", seq_time);
+    printf("\nTotal time for sequential execution: %f seconds\n", seq_time);
 
     // ---- free memory ----
     free(F);

@@ -21,17 +21,10 @@ int main()
     }
     // ---- end input and malloc ----
 
-    // Reverse filter F into FF
-    int FF[NF];
-    for (int i = 0; i < NF; i++)
-    {
-        FF[i] = F[NF - 1 - i];
-    }
-
     omp_set_num_threads(8); // Set the number of threads
 
     // Timing with OpenMP
-    // double start_time = omp_get_wtime();
+    double start_time = omp_get_wtime();
 
 // Convolution (Parallelized)
 #pragma omp parallel for
@@ -40,19 +33,19 @@ int main()
         R_parallel[i] = 0; // Initialize result to 0
         for (int j = 0; j < NF; j++)
         {
-            R_parallel[i] += A[i + j] * FF[j];
+            R_parallel[i] += A[i + j] * F[j];
         }
     }
 
-    // double end_time = omp_get_wtime(); // End time for parallel
-    // double total_time = end_time - start_time;
+    double end_time = omp_get_wtime(); // End time for parallel
+    double total_time = end_time - start_time;
 
     printf("Parallel result:\n");
     for (int i = 0; i <= NA - NF; i++)
     {
         printf("%d\n", R_parallel[i]);
     }
-    // printf("Total time for parallel execution: %f seconds\n", total_time);
+    printf("Total time for parallel execution: %f seconds\n", total_time);
 
     // ---- free memory ----
     free(F);
