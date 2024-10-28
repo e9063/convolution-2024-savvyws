@@ -7,10 +7,10 @@ int main()
     // ---- input and malloc A, F ----
     int NA, NF;
     scanf("%d %d", &NA, &NF);
-
+    int R_size = NA - NF + 1;
     int *A = malloc(sizeof(int) * NA);
     int *F = malloc(sizeof(int) * NF);
-    int *R_seq = malloc(sizeof(int) * (NA - NF + 1));
+    int *R_seq = malloc(sizeof(int) * R_size);
 
     for (int i = 0; i < NA; i++)
     {
@@ -25,9 +25,8 @@ int main()
     clock_t start_seq = clock();
 
     // Convolution
-    int result_size = NA - NF + 1;
 
-    for (int i = 0; i < result_size; i++)
+    for (int i = 0; i < R_size; i++)
     {
         int sum = 0; // Initialize result to 0
 
@@ -44,7 +43,7 @@ int main()
 
     // Print results
     printf("Sequential result:\n");
-    for (int i = 0; i < result_size; i++)
+    for (int i = 0; i < R_size; i++)
     {
         printf("%d\n", R_seq[i]);
     }

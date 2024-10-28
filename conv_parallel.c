@@ -17,7 +17,7 @@ int main()
     }
     for (int i = 0; i < NF; i++)
     {
-        scanf("%d", &F[i]);
+        scanf("%d", &F[NF - i - 1]);
     }
     // ---- end input and malloc ----
 
